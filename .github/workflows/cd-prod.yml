@@ -10,16 +10,15 @@ jobs:
     steps:
       - name: Set up SSH
         uses: actions/checkout@v2
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "$AWS_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${AWS_CSO_MANAGER_INSTANCE_IP} >> ~/.ssh/known_hosts
+      - name: Build & Deploy
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
-          EC2_INSTANCE_IP: ${{secrets.AWS_CSO_MANAGER_INSTANCE_USER}}
-      - name: SSH into EC2 Instance
+          PRIVATE_KEY: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
+          HOSTNAME: ${{secrets.AWS_CSO_MANAGER_INSTANCE_IP}}
+          USER_NAME: ${{secrets.AWS_CSO_MANAGER_INSTANCE_USER}}
         run: |
-          ssh -i ~/.ssh/id_rsa ${AWS_CSO_MANAGER_INSTANCE_USER}@${AWS_CSO_MANAGER_INSTANCE_IP} "echo Hello, EC2!"
-          ls
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+
+              # Now we have got the access of EC2 and we will start the deploy .
+              ls
+              '
