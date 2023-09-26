@@ -2,9 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: IngressClass
 metadata:
   name: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/rewrite-regex: /(/|$)(.*) /$1
 spec:
   controller: k8s.io/ingress-nginx
  
@@ -20,16 +17,15 @@ spec:
       http:
         paths:
           - path: /
-            pathType: Prefix
             backend:
               service:
                 name: cso-frontend
                 port:
-                  number: 80 
+                  number: 80
           - path: /api
             pathType: Prefix
             backend:
               service:
                 name: cso-gateway
                 port:
-                  number: 8080
+                  number: 8080 
