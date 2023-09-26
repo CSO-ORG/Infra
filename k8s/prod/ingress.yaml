@@ -16,13 +16,13 @@ spec:
     - host: poilusperdus.fr
       http:
         paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: cso-gateway
-                port:
-                  number: 8080
+          # - path: /api
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: cso-gateway
+          #       port:
+          #         number: 8080
           - path: /
             pathType: Prefix
             backend:
