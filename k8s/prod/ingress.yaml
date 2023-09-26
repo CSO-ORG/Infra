@@ -4,7 +4,7 @@ metadata:
   name: nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/rewrite-regex: /(/|$)(.*) /$2
+    nginx.ingress.kubernetes.io/rewrite-regex: /(/|$)(.*) /$1
 spec:
   controller: k8s.io/ingress-nginx
  
