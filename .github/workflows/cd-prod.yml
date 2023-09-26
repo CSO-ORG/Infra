@@ -1,0 +1,25 @@
+name: cd-prod
+
+on:
+  push:
+    branches: ["main"]
+jobs:
+  deploy:
+    name: Deploy latest changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH
+        uses: actions/checkout@v2
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$AWS_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${AWS_CSO_MANAGER_INSTANCE_IP} >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
+          EC2_INSTANCE_IP: ${{secrets.AWS_CSO_MANAGER_INSTANCE_USER}}
+      - name: SSH into EC2 Instance
+        run: |
+          ssh -i ~/.ssh/id_rsa ${AWS_CSO_MANAGER_INSTANCE_USER}@${AWS_CSO_MANAGER_INSTANCE_IP} "echo Hello, EC2!"
+          ls
