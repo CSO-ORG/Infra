@@ -4,7 +4,7 @@ metadata:
   name: nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/rewrite-regex: /api(/|$)(.*) /$2
+    nginx.ingress.kubernetes.io/rewrite-regex: /(/|$)(.*) /$2
 spec:
   controller: k8s.io/ingress-nginx
  
@@ -19,13 +19,6 @@ spec:
     - host: poilusperdus.fr
       http:
         paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: cso-gateway
-                port:
-                  number: 8080
           - path: /
             pathType: Prefix
             backend:
@@ -33,3 +26,10 @@ spec:
                 name: cso-frontend
                 port:
                   number: 80 
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: cso-gateway
+                port:
+                  number: 8080
