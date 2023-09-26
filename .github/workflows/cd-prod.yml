@@ -1,4 +1,4 @@
-name: cd
+name: cd-prod
 
 on:
   push:
