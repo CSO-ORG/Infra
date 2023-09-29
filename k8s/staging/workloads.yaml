@@ -602,4 +602,4 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: dreion/k8s-cso-front:release-0.0.4
+          image: dreion/k8s-cso-front:release-0.0.5
